@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>7.小球动画(封装成JS)-WT</title>
+    <style>
+        .wrap{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        .wrap div{
+            width: 20px;
+            height: 20px;
+            background: pink;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+
+        }
+        .wrap .xiaohong{
+            transform: translateY(-50px);
+            background: red;
+        }
+        .wrap .xiaohui{
+            transform: translateY(50px);
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="xiaohong"></div>
+    <div class="xiaofen"></div>
+    <div class="xiaohui"></div>
+</div>
+<script src = "move.js"></script>  <!--引入外部js文件-->
+<script>
+    window.onload = function(){
+        var balls = document.querySelectorAll('.wrap div');
+        var xiaohong = balls[0];
+        var xiaofen = balls[1];
+        var xiaohui = balls[2];
+
+        //定义一个move函数，让小球动起来
+        //两个参数分别表示要移动的小球对象以及目标位置
+
+        //move函数返回一个promise对象
+        //then里面的回调函数名直接改成move
+        //把move方法加到div原型链上，然后通过对象点的方式调用
+
+        xiaohong.move(100)
+        //xiaofen.move函数体传过去，不同的调用方式可能会导致里面的this隐性丢失，所以要用bind绑定this值
+            .then(xiaofen.move.bind(xiaofen,150))
+            .then(xiaohui.move.bind(xiaohui,200))
+            .then(xiaohui.move.bind(xiaohui,150))
+            .then(xiaohong.move.bind(xiaohong,150))
+
+
+
+    }
+</script>
+</body>
+</html>
